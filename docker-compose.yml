@@ -1,0 +1,32 @@
+version: "3.9"
+services:
+  mongo_db:
+    container_name: db_container
+    image: mongo:latest
+    restart: alawys
+    volumes:
+      - mongo_db:/data/db
+
+  api:
+    build: .
+    ports:
+      - 4000:3000
+    restart: unless-stopped
+    links:
+      - redis
+    environment:
+      PORT: 3000
+      DATABASE_URL: mongodb://mongo_db:27017/test
+
+    depends_on:
+      - mongo_db
+  redis:
+    image: redis:6.2-alpine
+    container_name: redis
+    restart: unless-stopped
+    network_mode: bridge
+    expose:
+      - 6379
+
+volumes:
+  mongo_db: {}

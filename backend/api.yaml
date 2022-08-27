@@ -1,0 +1,61 @@
+swagger: "2.0"
+info:
+  title: TEST ENTRETIEN
+  description: this my test
+  version: 1.0
+  servers: "http://localhost:3000"
+schemes: ["http"]
+tags:
+  name: Users
+  description: API for users in the system
+paths:
+  /orders:
+    get:
+      summary: return all orders
+      description: get all orders
+      responses:
+        200:
+          description: "success"
+        400:
+          description: error by
+        500:
+          description: server error
+  /orders/{OrderId}:
+    get:
+      summary: return one order
+      description: return order by id
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: integer
+
+      responses:
+        200:
+          description: "success"
+        400:
+          description: error by
+        500:
+          description: server error
+
+  /orders/create:
+    post:
+      summary: create order
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: order
+          schema:
+            type: object
+          properties:
+            title:
+              type: string
+            description:
+              type: string
+      responses:
+        201:
+          description: ok
